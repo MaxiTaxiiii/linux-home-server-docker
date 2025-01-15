@@ -26,15 +26,18 @@ Welche dieser Software kann in einem Modernen Rechenzentrum gefunden werden?
 
 Welche Speichermedien werden in modernen Rechenzentren verwendet? Und für welche Aufgaben?
 
-* **SAN** (Storage Area Network) für Hochleistungs-Datenbanken, Virtualisierung, Hochleistungsrechnen...
-* **NAS** (Network Attached Storage) für Backup, Archivierung, Dateispeicherung...
+* **SAN** (Storage Area Network) für Hochleistungs-Datenbanken, Virtualisierung, Hochleistungsrechnen ...
+* **NAS** (Network Attached Storage) für Backup, Archivierung, Dateinspeicherung ...
 
 Wie funktioniert physikalisch die Arbeitsweise dieser Speichermedien? (Erkläre Detailiert wie die Daten auf dem Medium gespeichert werden.)
 * **SAN**:
-Ein **SAN** fasst die einzelnen Laufwerke, unabhängig von Ort oder Betriebssystem, von Servern zusammen und teilt sie in wenige große Speichergeräte, sodass ein großes Datei-speicher-Netzwerk entsteht und sie von jedem Server
-über das Speichernetz können gemeinsam genutzt werden. Der eigentliche Zugriff erfolgt auf Block-Level und wird durch einen speziellen Server, der die jeweiligen Laufwerke verwaltet.
+Ein **SAN** fässt die einzelnen Laufwerke, unabhängig von Ort oder Betriebssystem, von Disk-Arrays zusammen und teilt sie in wenige große Speichergeräte, sodass ein großes Dateispeicher-Netzwerk entsteht und sie von jedem Server
+über das Speichernetz gemeinsam genutzt werden können. Der eigentliche Zugriff erfolgt auf Block-Level und wird durch SAN-Switche und Storage-Controller verwaltet,
+dabei sind diese Komponenten miteinander meist durch Fibre Channel verknüpft und somit ist eine sehr schnelle Übertragung möglich.
+Aufgrund einer Meshed-artigen Struktur, bietet ein SAN eine sehr hohe Ausfallsicherheit.
+
 * **NAS**:
-Ein NAS beinhaltet mehrere Festplatten und fungiert als zentraler Datenspeicher in einem LAN, somit ist er ideal fürs gemeinsames Filesharing oder Ablegung von Dateien.
+Ein NAS besteht aus mehreren Festplatten und fungiert als zentraler Datenspeicher in einem LAN, somit ist er ideal fürs gemeinsames Filesharing oder Ablegung von Dateien, bietet jedoch eine sehr geringe Ausfallsicherheit.
 
 Welche Speichermedien werden wahrscheinlich in Zukunft verwendet werden und wie funktionieren diese?
 * **Racetrack Speicher**:
@@ -42,10 +45,18 @@ Dieses Speichermedium speichert die Bits auf nebeneinander geordneten ferromagne
 * **Protein-coated Disc**: 
 Dieses Speichermedium ist eine DVD, die mit einem Protein überzogen wurde. Diese gibt bei Lichteinstrahlung eine Substanz ab, die als Energiespeicher genutzt werden kann. Somit wäre eine Kapazität von bis zu 50 TByte möglich.
 * **Holographische/Mehrdimensionale optische Datenträger**:
-Dieses Speichermedium hat eine Ebene mehr als übliche DVD/CDs und haben somit eine enorme Kapazität.
+Dieses Speichermedium hat eine Ebene mehr als übliche DVD/CDs und können somit eine enorme Kapazität erreichen.
 Welche Backup Strategie verfolgst du im Moment?
 * Ich speichere alle meine wichtigen Dateien in der Cloud.
 Welche Daten verlierst du solltest du jetzt deinen Laptop verlieren?
-* Programme, Spiele, Lokal gespeicherte Daten.
+* Programme, Spiele und Lokal gespeicherten Daten.
 ## 4. Arbeitsschritte
+Ubuntu ISO-Datei installieren und mit balenaEtcher auf einen USB-Stick flashen.
+Ins Boot-Menu einsteigen und in den USB-Stick booten.
+Ubuntu installieren
+
+
+
+
+
 
