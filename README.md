@@ -163,7 +163,7 @@ Einen Ordner für die Speicherung unserer yaml Dateien
 
 ```mkdir radarr```
 
-```mkdir jacketts```
+```mkdir jackett```
 
 ```mkdir homeassistant```
 
@@ -218,7 +218,7 @@ Aber bevor wir die yaml-Datei starten, müssen wir noch unsere Ordner erstellen
 
 ```mkdir radarr```
 
-```mkdir jacketts```
+```mkdir jackett```
 
 ```mkdir blackhole```
 
@@ -237,7 +237,7 @@ Aber bevor wir die yaml-Datei starten, müssen wir noch unsere Ordner erstellen
 
 ```mkdir data```
 
-```cd jacketts```
+```cd jackett```
 
 ```mkdir data```
 
@@ -411,7 +411,7 @@ Speichern und somit haben wir einen Download-Client
 
 Zuletzt benötigen wir noch ein Indexer, der die Seiten für uns durchsucht
 
-```cd ~/docker-composes/jacketts```
+```cd ~/docker-composes/jackett```
 
 ```touch docker-compose.yml```
 
@@ -524,6 +524,19 @@ In diesem Projekt wurde ein Home Server umgesetzt, um nutzliche Services wie z.B
 
 ## 6.  Quellen
 
+[1] hub.docker.com, “linuxserver/homeassistant,” [online]. Available at: https://hub.docker.com/r/linuxserver/homeassistant. [Accessed 20 January 2025]. 
+
+[2] hub.docker.com, “linuxserver/plex,” [online]. Available at: https://hub.docker.com/r/linuxserver/plex. [Accessed 20 January 2025]. 
+
+[3] hub.docker.com, “linuxserver/sonarr,” [online]. Available at: https://hub.docker.com/r/linuxserver/sonarr. [Accessed 20 January 2025]. 
+
+[4] hub.docker.com, “linuxserver/radarr,” [online]. Available at: https://hub.docker.com/r/linuxserver/radarr. [Accessed 20 January 2025]. 
+
+[5] ubuntu.com, "Install and Configure Samba" [online]. Available at: https://ubuntu.com/tutorials/install-and-configure-samba#1-overview. [Accessed 20 January 2025]. 
+
+[6] hub.docker.com, "linuxserver/jackett" [online]. Available at: https://hub.docker.com/r/linuxserver/jackett. [Accessed 20 January 2025]. 
+
+[7] docs.docker.com, "Install Docker Engine on Ubuntu" [online]. Available at: https://docs.docker.com/engine/install/ubuntu/. [Accessed 20 January 2025]. 
 
 
 
