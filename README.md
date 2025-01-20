@@ -11,9 +11,9 @@ Ich bin mir sicher, dass wir alle mit Windows oder Mac schon bekannt sind. Jedes
 Es wurde ein Ubuntu Home Server realisiert, mit dem Samba, Home Assistant, Sonarr, PiVPN und Plex eingerichtet wurde. Dies wurde mit verschiedenen Mitteln erreicht, wie z.B Docker oder dem APT Manager.
 ## 3. Theorie
 
-Linux Terminal Basics
-Docker Basics
-Netzwerktechnik Bascis
+Linux Terminal 
+Docker 
+Netzwerktechnik
 
 ## 4. Arbeitsschritte
 **Ubuntu installieren**
@@ -44,6 +44,25 @@ Package Manager auf den neusten Stand bringen
 OpenSSH installieren
 
 ```sudo apt install openssh-server```
+
+Prüfen ob OpenSSH läuft
+
+```sudo systemctl status ssh```
+
+Umsteigen aufs Haupt Gerät und Powershell öffnen
+
+In Powershell eingeben:
+
+```ssh benutzername@IP-Adresse des Servers z.B. 192.168.0.50```
+
+Passwort eingeben
+
+Nun können wir unsern Server fernsteuern, aber nur wenn wir uns in dem selben LAN befinden wie der Server.
+
+
+
+
+
 
 
 
