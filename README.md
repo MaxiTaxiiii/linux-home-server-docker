@@ -26,15 +26,23 @@ Ubuntu vollständig installieren
 
 Weil Server meistens keine grafische Oberfläche haben, werden sie mit OpenSSH ferngesteuert.
 Als Voraussetzung braucht unser Server eine statische IP-Adresse, dies kann ganz einfach gemacht werden indem man auf die Netzwerkeinstellungen geht.
+
 ```Einstellungen -> Netzwerk -> auf das kleine Zahnrad -> IPv4```
+
 Statische IPv4 einstellen z.B.
+
  ```Adresse: 192.168.0.50 Subnetzmaske: 255.255.255.0 Gateway: 192.168.0.1 DNS: 1.1.1.1 ```
+
 Netzwerk neustarten und nun haben wir eine statische IP-Adresse.
 
 Um OpenSSH zu installieren muss man in das Terminal eintauchen.
+
 Package Manager auf den neusten Stand bringen
+
 ```sudo apt upgrade```
+
 OpenSSH installieren
+
 ```sudo apt install openssh-server```
 
 
