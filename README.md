@@ -101,7 +101,7 @@ Samba neustarten
 
 ```sudo service smbd restart```
 
-Firewall konfigurieren damit Samba das Netzwerk ohne Probleme navigieren kann
+Firewall konfigurieren, damit Samba das Netzwerk ohne Probleme navigieren kann
 
 ```sudo ufw allow samba```
 
@@ -157,6 +157,16 @@ Einen Ordner für die Speicherung unserer yaml Dateien
 
 ```mkdir plex```
 
+```mkdir qbittorrent```
+
+```mkdir sonarr```
+
+```mkdir radarr```
+
+```mkdir jacketts```
+
+```mkdir homeassistant```
+
 ```cd plex```
 
 ```touch docker-compose.yml```
@@ -198,17 +208,338 @@ Aber bevor wir die yaml-Datei starten, müssen wir noch unsere Ordner erstellen
 
 ```cd ~```
 
+```mkdir data```
+
+```mkdir HASS```
+
 ```mkdir plex```
+
+```mkdir sonarr```
+
+```mkdir radarr```
+
+```mkdir jacketts```
+
+```mkdir blackhole```
+
+```mkdir qbittorrent```
+
 
 ```cd plex```
 
 ```mkdir data```
 
-Nun kehren wir zu unseren yaml-Datei zurück und starten diese
+```cd sonarr```
+
+```mkdir data```
+
+```cd radarr```
+
+```mkdir data```
+
+```cd jacketts```
+
+```mkdir data```
+
+```cd qbittorrent```
+
+```mkdir data```
+
+```cd data```
+
+```mkdir complete```
+
+```mkdir incomplete```
+
+Nun kehren wir zur unserer yaml-Datei zurück und starten diese
 
 ```docker compose up -d```
 
 Falls alles funktioniert hat, sollten wir jetzt in der Lage sein, auf das Plex Webinterface zuzugreifen
+
+In den Webbrowser eingeben
+
+```http://192.168.0.50:32400/```
+
+Plex und unseren Pfad für TV und Filme einrichten
+
+**Home Assistant**
+
+Home Assistant ist ein nützlicher Dienst, der uns ermöglicht, diverse Automationen durchzuführen.
+
+```cd ~/docker-composes/homeassistant```
+
+```touch docker-compose.yml```
+
+```sudo nano docker-compose.yml```
+
+```
+services:
+  homeassistant:
+    image: lscr.io/linuxserver/homeassistant:latest
+    container_name: homeassistant
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vienna
+    volumes:
+      - /home/maksymilian/HASS:/config
+    ports:
+      - 8123:8123 
+    restart: unless-stopped
+```
+
+```docker compose up -d```
+
+Auf das Webinterface zugreifen
+
+```http://192.168.0.50:8123```
+
+Einloggen und Home Assistant entdecken
+
+**Sonarr**
+
+Sonarr wird uns Serien aus dem Internet herunterladen
+
+Um Sonarr herunterzuladen, brauchen wir auch ein Docker Compose
+
+```cd ..```
+
+```cd sonarr```
+
+```touch docker-compose.yml```
+
+```sudo nano docker-compose.yml```
+
+Folgenden Inhalt hinzufügen
+
+```
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vienna
+    volumes:
+      - /home/maksymilian/sonarr/data:/config
+      - /home/maksymilian/maksymilian-share/plex/tv:/tv #optional
+      - /home/maksymilian/data:/downloads #optional
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+```
+
+```docker compose up -d```
+
+Nun sollten wir in der Lage sein, auf das Sonarr Webinterface zuzugreifen
+
+```http://192.168.0.50:8989/```
+
+Einloggen -> Settings -> Media Management
+
+**Rename Episodes**
+
+**Replace Illegal Character**
+
+TV Ordner hinzufügen
+
+<img src="img/image3.png" alt="Sonarr" style="zoom:33%;"/>
+
+**qbittorrent**
+
+Um aus dem Internet etwas herunterzuladen, benötigen wir einen Download-Client
+
+Zu unserem qbittorrent Ordner navigieren
+
+```cd ~/docker-composes/qbittorrent```
+
+```touch docker-compose.yml```
+
+```sudo nano docker-compose.yml```
+
+```
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - /home/maksymilian/qbittorrent/data:/config
+      - /home/makymilian/data:/downloads 
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+```
+
+```docker compose up -d```
+
+Auf das Webinterface zugreifen
+
+```http://192.168.0.50:8080/```
+
+Einloggen und auf die Einstellungen navigieren
+
+Default Save Path und Keep incomplete Torrents in einstellen
+
+<img src="img/image4.png" alt="qbittorrent" style="zoom:33%;"/>
+
+Runterscrollen -> Run external program on torrent finished
+
+```unrar x -r -y "%F/*.rar" "%F/"```
+
+<img src="img/image5.png" alt="qbittorrent" style="zoom:33%;"/>
+
+Speichern und auf Sonarr zurückkehren
+
+Settings -> Download Clients -> große Plus -> qBittorrent -> folgende Daten angeben
+
+<img src="img/image6.png" alt="sonarr" style="zoom:33%;"/>
+
+Speichern und somit haben wir einen Download-Client
+
+**Indexer**
+
+Zuletzt benötigen wir noch ein Indexer, der die Seiten für uns durchsucht
+
+```cd ~/docker-composes/jacketts```
+
+```touch docker-compose.yml```
+
+```sudo nano docker-compose.yml```
+
+```
+services:
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - AUTO_UPDATE=true #optional
+      - RUN_OPTS= #optional
+    volumes:
+      - /home/maksymilian/jackett/data:/config
+      - /home/maksymilian/blackhole:/downloads
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+```
+
+```docker compose up -d```
+
+Auf das Webinterface zugreifen
+
+```http://192.168.0.50:9117/UI/Dashboard```
+
+Add Indexer -> eine Seite auswählen z.B. 1337 -> runterscrollen -> Add Selected
+
+API Key kopieren
+
+Zu Sonarr zurückkehren
+
+Settings -> Indexers -> große Plus -> Torznab -> folgende Daten angeben
+
+<img src="img/image7.png" alt="sonarr" style="zoom:33%;"/>
+
+Jetzt können wir Serien endlich herunterladen
+
+Dafür geht man auf Series -> Add New -> z.B. Breaking Bad -> Luppen Symbol auf einer Season
+
+Nun sollte der Download-Prozess gestartet sein
+
+Falls alles erfolgreich lief, sollte die Serie auch nun in Plex verfügbar sein
+
+<img src="img/image8.png" alt="sonarr" style="zoom:33%;"/>
+
+**Radarr**
+
+Die gleiche Anwendung wie Sonarr, nur für Filme gedacht
+
+Selber Prozess, nur andere yaml-Datei
+
+```
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Vienna
+    volumes:
+      - /home/maksymilian/radarr/data:/config
+      - /home/maksymilian/maksymilian-share/plex/movies:/movies 
+      - /home/maksymilian/data:/downloads 
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+```
+
+**PiVPN**
+
+Um auf unseren Server von außen zuzugreifen, benötigen wir einen VPN
+
+```curl -L https://install.pivpn.io | bash```
+
+Nun sollte sich ein Installations-Fenster geöffnet haben
+
+No -> No -> 192.168.0.31 -> 5x Ok -> WireGuard -> 51820 -> Ok -> Cloudflare -> Ok -> Public IP -> 3x Ok -> Yes -> Ok -> Restart
+
+Nach einem Neustart, sollte PiVPN erfolgreich installiert sein
+
+```pivpn -a```
+
+maksymilian
+
+Jetzt müssen wir noch eine Portweiterleitung Regel festlegen
+
+<img src="img/image9.png" alt="sonarr" style="zoom:33%;"/>
+
+Nun sollte alles eingerichtet sein
+
+Um uns zu verbinden, benötigen wir noch die WireGuard App
+
+Sobald die App heruntergeladen ist, kann man den Tunnel ganz leicht mit einem QR-Code hinzufügen
+
+```pivpn -qr```
+
+maksymilian
+
+Nach erfolgreicher Eingabe, sollten wir jetzt in der Lage sein, uns mit unserem VPN zu verbinden
+
+## 5.  Zusammenfassung
+
+In diesem Projekt wurde ein Home Server umgesetzt, um nutzliche Services wie z.B. Plex, Sonarr, Radarr, Samba in Anspruch zu nehmen. Mit einem Home Server kann man natürlich noch mehr machen, die Möglichkeiten sind endlos.
+
+## 6.  Quellen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
